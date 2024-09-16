@@ -34,6 +34,13 @@ fun main() {
 //    }.also { allThreads.add(it) }
 
     Thread {
+        println("Starting threadFOO")
+        Thread.sleep(100)
+        concurrentHashMap.compute(sharedKey) { _, _ -> 1337 }
+        println("Finished threadFOO")
+    }.also { allThreads.add(it) }
+
+    Thread {
         println("Starting thread4")
         concurrentHashMap.compute(sharedKey) { _, value ->
             println("Computing counter on thread4")
@@ -65,4 +72,5 @@ fun main() {
     allThreads.parallelStream().forEach { it.join() }
 
     println("All threads finished :)")
+    println("Final value ${concurrentHashMap[sharedKey]}")
 }
