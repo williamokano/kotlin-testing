@@ -1,5 +1,7 @@
 package dev.okano.kotlintesting.reentrantreadwritelock
 
+import dev.okano.kotlintesting.helpers.newThread
+import dev.okano.kotlintesting.helpers.startAndWaitAll
 import java.util.concurrent.locks.ReentrantReadWriteLock
 import kotlin.random.Random
 import kotlin.time.measureTime
@@ -52,15 +54,4 @@ fun main() {
 
     threadPool.startAndWaitAll()
     println("Program finished")
-}
-
-fun MutableList<Thread>.newThread(body: () -> Unit) {
-    this.add(Thread { body() })
-}
-
-fun List<Thread>.startAndWaitAll() {
-    println("Starting all threads")
-    this.parallelStream().forEach { it.start() }
-    this.parallelStream().forEach { it.join() }
-    println("All threads finished")
 }
